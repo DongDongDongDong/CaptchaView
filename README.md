@@ -1,0 +1,2 @@
+# CaptchaView
+使用coreGraphic绘制的本地验证码。多用于防止手机验证码的恶意获取
