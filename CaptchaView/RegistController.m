@@ -95,11 +95,7 @@
         if ([str isEqualToString:self.captchView.changeString]) {
             [self.getPhoneCodeBtn setEnabled:YES];
         }else{
-            CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform.translation.x"];
-            anim.repeatCount = 1;
-            anim.values = @[@-20, @20, @-20];
-            [self.captchView.layer addAnimation:anim forKey:nil];
-            [self.imageVerifyView.layer addAnimation:anim forKey:nil];
+            [self shakeAction];
             [self.getPhoneCodeBtn setEnabled:NO];
         }
         return YES;
@@ -110,7 +106,42 @@
     
 }
 
+
+
 #pragma mark privateMethod
+- (void)shakeAction
+{
+    // 晃动次数
+    static int numberOfShakes = 4;
+    // 晃动幅度（相对于总宽度）
+    static float vigourOfShake = 0.04f;
+    // 晃动延续时常（秒）
+    static float durationOfShake = 0.5f;
+    
+    CAKeyframeAnimation *shakeAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    
+    // 方法一：绘制路径
+    CGRect frame = self.imageVerifyView.frame;
+    // 创建路径
+    CGMutablePathRef shakePath = CGPathCreateMutable();
+    // 起始点
+    CGPathMoveToPoint(shakePath, NULL, CGRectGetMidX(frame), CGRectGetMidY(frame));
+    for (int index = 0; index < numberOfShakes; index++)
+    {
+        // 添加晃动路径 幅度由大变小
+        CGPathAddLineToPoint(shakePath, NULL, CGRectGetMidX(frame) - frame.size.width * vigourOfShake*(1-(float)index/numberOfShakes),CGRectGetMidY(frame));
+        CGPathAddLineToPoint(shakePath, NULL,  CGRectGetMidX(frame) + frame.size.width * vigourOfShake*(1-(float)index/numberOfShakes),CGRectGetMidY(frame));
+    }
+    // 闭合
+    CGPathCloseSubpath(shakePath);
+    shakeAnimation.path = shakePath;
+    shakeAnimation.duration = durationOfShake;
+    // 释放
+    CFRelease(shakePath);
+    
+    [self.imageVerifyView.layer addAnimation:shakeAnimation forKey:kCATransition];
+}
+
 
 - (UIImage *)createImageWithColor:(UIColor *)color
 {

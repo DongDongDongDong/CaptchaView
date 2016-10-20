@@ -21,11 +21,10 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.layer.cornerRadius = 5.0; //设置layer圆角半径
-        self.layer.masksToBounds = YES; //隐藏边界
+        self.layer.cornerRadius = 5.0;
+        self.layer.masksToBounds = YES;
         self.backgroundColor = kRandomColor;
         
-        //显示一个随机验证码
         [self changeCaptcha];
     }
     
@@ -34,10 +33,8 @@
 #pragma mark 更换验证码,得到更换的验证码的字符串
 -(void)changeCaptcha
 {
-    //数组中存放的是全部可选的字符，可以是字母，也可以是中文
     self.changeArray = [[NSArray alloc] initWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",nil];
     
-    //如果能确定最大需要的容量，使用initWithCapacity:来设置，好处是当元素个数不超过容量时，添加元素不需要重新分配内存
     NSMutableString *getStr = [[NSMutableString alloc] initWithCapacity:kCharCount];
     self.changeString = [[NSMutableString alloc] initWithCapacity:kCharCount];
     
@@ -52,22 +49,16 @@
 
 }
 
-#pragma mark 点击view时调用，因为当前类自身就是UIView，点击更换验证码可以直接写到这个方法中，不用再额外添加手势
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //点击界面，切换验证码
     [self changeCaptcha];
-    
     //setNeedsDisplay调用drawRect方法来实现view的绘制
     [self setNeedsDisplay];
 }
 
 #pragma mark 绘制界面（1.UIView初始化后自动调用； 2.调用setNeedsDisplay方法时会自动调用）
 - (void)drawRect:(CGRect)rect {
-    // 重写父类方法，首先要调用父类的方法
     [super drawRect:rect];
-    
-    //设置随机背景颜色
     self.backgroundColor = kRandomColor;
     
     //获得要显示验证码字符串，根据长度，计算每个字符显示的大概位置
