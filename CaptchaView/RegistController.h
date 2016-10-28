@@ -1,8 +1,8 @@
 //
 //  RegistController.h
-//  MaintenanceProject
+//  CaptchaView
 //
-//  Created by andylau on 16/9/23.
+//  Created by andylau on 2016/10/18.
 //  Copyright © 2016年 andylau. All rights reserved.
 //
 

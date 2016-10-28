@@ -1,9 +1,9 @@
 //
 //  MyTextField.h
-//  CheckAuto3-0
+//  CaptchaView
 //
-//  Created by andylau on 15/6/15.
-//  Copyright (c) 2015年 youxinpai. All rights reserved.
+//  Created by andylau on 2016/10/18.
+//  Copyright © 2016年 andylau. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

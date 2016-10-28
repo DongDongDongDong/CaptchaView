@@ -1,14 +1,14 @@
 //
 //  CaptchaView.m
-//  MaintenanceProject
+//  CaptchaView
 //
-//  Created by andylau on 2016/10/17.
+//  Created by andylau on 2016/10/18.
 //  Copyright © 2016年 andylau. All rights reserved.
 //
 
 
 #define kRandomColor  [UIColor colorWithRed:arc4random() % 256 / 256.0 green:arc4random() % 256 / 256.0 blue:arc4random() % 256 / 256.0 alpha:1.0];
-#define kLineCount 6
+#define kLineCount 4
 #define kLineWidth 1.0
 #define kCharCount 4
 #define kFontSize [UIFont systemFontOfSize:arc4random() % 5 + 15]
@@ -41,7 +41,7 @@
     //随机从数组中选取需要个数的字符，然后拼接为一个字符串
     for(int i = 0; i < kCharCount; i++)
     {
-        NSInteger index = arc4random() % ([self.changeArray count] - 1);
+        NSInteger index = arc4random() % ([self.changeArray count]);
         getStr = [self.changeArray objectAtIndex:index];
         
         self.changeString = (NSMutableString *)[self.changeString stringByAppendingString:getStr];
@@ -62,6 +62,7 @@
     self.backgroundColor = kRandomColor;
     
     //获得要显示验证码字符串，根据长度，计算每个字符显示的大概位置
+    // width height为每个字符可变的最大宽高
     NSString *text = [NSString stringWithFormat:@"%@",self.changeString];
     CGSize cSize = [@"S" sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20]}];
     int width = rect.size.width / text.length - cSize.width;
