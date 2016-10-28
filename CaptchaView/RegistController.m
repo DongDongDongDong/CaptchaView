@@ -27,9 +27,16 @@
 @implementation RegistController
 
 - (CaptchaView *)captchView{
+    __weak typeof(self) weakSelf = self;
     if (_captchView == nil) {
         _captchView = [[CaptchaView alloc]initWithFrame:self.randomCodeView.bounds];
         _captchView.backgroundColor = [UIColor lightGrayColor];
+        
+        /* 每次刷新验证码，都需将按钮置为不可用**/
+        _captchView.changeCaptchaBlock = ^(void){
+            [weakSelf.getPhoneCodeBtn setEnabled:NO];
+        };
+        
         [self.randomCodeView addSubview:_captchView];
     }
     return _captchView;
